@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Nova | Diseño & Marketing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        accent1: '#3b82f6', // blue
+                        accent2: '#8b5cf6', // purple
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hover Overlay for Portfolio */
+        .portfolio-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        .portfolio-card img {
+            transition: transform 0.5s ease;
+        }
+        .portfolio-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Floating animation for hero image/shape */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="text-2xl font-bold tracking-tighter">STUDIO<span class="text-gradient">NOVA</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#acerca" class="text-sm font-medium hover:text-accent1 transition-colors">Acerca de</a>
+                    <a href="#servicios" class="text-sm font-medium hover:text-accent1 transition-colors">Servicios</a>
+                    <a href="#portafolio" class="text-sm font-medium hover:text-accent1 transition-colors">Portafolio</a>
+                    <a href="#contacto" class="px-5 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/30 transition-all text-white">Contáctanos</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darker border-b border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#acerca" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Acerca de</a>
+                <a href="#servicios" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Servicios</a>
+                <a href="#portafolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Portafolio</a>
+                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium text-blue-400 hover:text-blue-300">Contáctanos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
+        <!-- Background decorative elements -->
+        <div class="absolute top-1/4 left-0 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+        <div class="absolute bottom-1/4 right-0 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-on-scroll">
+                    Diseñamos <span class="text-gradient">experiencias</span> que impulsan tu marca
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-10 font-light animate-on-scroll" style="transition-delay: 100ms;">
+                    Somos una agencia creativa especializada en diseño estratégico y marketing digital. Transformamos ideas complejas en soluciones visuales cautivadoras.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-on-scroll" style="transition-delay: 200ms;">
+                    <a href="#portafolio" class="px-8 py-4 rounded-full bg-white text-dark font-bold hover:bg-gray-200 transition-colors shadow-lg hover:shadow-white/20">
+                        Ver Proyectos
+                    </a>
+                    <a href="#contacto" class="px-8 py-4 rounded-full border border-gray-600 hover:border-accent1 hover:text-accent1 transition-all">
+                        Hablar con un experto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acerca De Section -->
+    <section id="acerca" class="py-24 bg-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-on-scroll">
+                    <h2 class="text-sm font-bold tracking-widest text-accent2 uppercase mb-3">Nuestro Enfoque</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-6">Creatividad con un <br/> <span class="text-gradient">Propósito Estratégico</span></h3>
+                    <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        En Studio Nova, no creemos en el diseño por el simple hecho de verse bien. Creemos en el diseño como una herramienta para resolver problemas, conectar con audiencias y generar resultados medibles.
+                    </p>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                        Nuestro equipo fusiona la estética vanguardista con tácticas de marketing comprobadas para asegurar que tu marca no solo destaque, sino que domine su nicho de mercado.
+                    </p>
+                    <div class="flex items-center gap-6">
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-bold text-white">10+</span>
+                            <span class="text-sm text-gray-500 uppercase tracking-wide">Años de Exp.</span>
+                        </div>
+                        <div class="w-px h-10 bg-gray-700"></div>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-bold text-white">250+</span>
+                            <span class="text-sm text-gray-500 uppercase tracking-wide">Proyectos Exitosos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-on-scroll floating" style="transition-delay: 200ms;">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-3xl transform rotate-3 scale-105 opacity-30 blur-lg"></div>
+                    <img src="https://placehold.co/600x600/1e1e1e/3b82f6?text=Equipo+Creativo" alt="Agencia Creativa" class="relative rounded-3xl w-full object-cover shadow-2xl border border-gray-800">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios Section -->
+    <section id="servicios" class="py-24 bg-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-sm font-bold tracking-widest text-accent1 uppercase mb-3">Qué Hacemos</h2>
+                <h3 class="text-4xl md:text-5xl font-bold">Nuestros <span class="text-gradient">Servicios</span></h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-darker p-8 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-colors group animate-on-scroll">
+                    <div class="w-14 h-14 bg-blue-900/30 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-paint-brush text-2xl text-blue-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">Branding</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Identidad visual corporativa, logotipos, manuales de marca y estrategia de posicionamiento para destacar en el mercado.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="bg-darker p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-colors group animate-on-scroll" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-purple-900/30 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-2xl text-purple-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">Marketing Digital</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Campañas estratégicas, SEO, SEM, y embudos de conversión diseñados para maximizar el ROI de tu negocio.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="bg-darker p-8 rounded-2xl border border-gray-800 hover:border-blue-500/50 transition-colors group animate-on-scroll" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-blue-900/30 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-laptop-code text-2xl text-blue-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">Diseño Web</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Desarrollo de sitios web modernos, rápidos y optimizados para la mejor experiencia de usuario (UX/UI).</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="bg-darker p-8 rounded-2xl border border-gray-800 hover:border-purple-500/50 transition-colors group animate-on-scroll" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-purple-900/30 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-share-alt text-2xl text-purple-500"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">Gestión de Redes</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Creación de contenido atractivo, community management y estrategias de crecimiento orgánico en plataformas clave.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portafolio Section -->
+    <section id="portafolio" class="py-24 bg-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 animate-on-scroll">
+                <div>
+                    <h2 class="text-sm font-bold tracking-widest text-accent2 uppercase mb-3">Nuestro Trabajo</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold">Proyectos <span class="text-gradient">Destacados</span></h3>
+                </div>
+                <a href="#" class="mt-6 md:mt-0 text-gray-400 hover:text-white flex items-center gap-2 group">
+                    Ver todo el portafolio <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Item 1 -->
+                <div class="portfolio-card relative rounded-2xl overflow-hidden cursor-pointer h-80 animate-on-scroll">
+                    <img src="https://placehold.co/800x600/111827/3b82f6?text=Campaña+Neón" alt="Proyecto 1" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-8">
+                        <span class="text-blue-400 text-sm font-bold mb-1 uppercase tracking-wider">Marketing Digital</span>
+                        <h4 class="text-2xl font-bold text-white mb-2">Campaña Neón Launch</h4>
+                        <div class="w-10 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded"></div>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="portfolio-card relative rounded-2xl overflow-hidden cursor-pointer h-80 lg:col-span-2 animate-on-scroll" style="transition-delay: 100ms;">
+                    <img src="https://placehold.co/1200x600/111827/8b5cf6?text=Rediseño+Fintech" alt="Proyecto 2" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-8">
+                        <span class="text-purple-400 text-sm font-bold mb-1 uppercase tracking-wider">Diseño Web UX/UI</span>
+                        <h4 class="text-2xl font-bold text-white mb-2">Plataforma Fintech Global</h4>
+                        <div class="w-10 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded"></div>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="portfolio-card relative rounded-2xl overflow-hidden cursor-pointer h-80 lg:col-span-2 animate-on-scroll">
+                    <img src="https://placehold.co/1200x600/111827/3b82f6?text=Identidad+Orgánica" alt="Proyecto 3" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-8">
+                        <span class="text-blue-400 text-sm font-bold mb-1 uppercase tracking-wider">Branding Corporativo</span>
+                        <h4 class="text-2xl font-bold text-white mb-2">Marca Orgánica EcoLife</h4>
+                        <div class="w-10 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded"></div>
+                    </div>
+                </div>
+                <!-- Item 4 -->
+                <div class="portfolio-card relative rounded-2xl overflow-hidden cursor-pointer h-80 animate-on-scroll" style="transition-delay: 100ms;">
+                    <img src="https://placehold.co/800x600/111827/8b5cf6?text=Social+Media" alt="Proyecto 4" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-8">
+                        <span class="text-purple-400 text-sm font-bold mb-1 uppercase tracking-wider">Gestión de Redes</span>
+                        <h4 class="text-2xl font-bold text-white mb-2">Estrategia Urbana</h4>
+                        <div class="w-10 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-24 bg-dark relative overflow-hidden">
+        <!-- Decor elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div class="animate-on-scroll">
+                    <h2 class="text-sm font-bold tracking-widest text-accent1 uppercase mb-3">Trabajemos Juntos</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-6">Inicia tu <br/><span class="text-gradient">Transformación</span></h3>
+                    <p class="text-gray-400 text-lg mb-8">
+                        ¿Listo para llevar tu marca al siguiente nivel? Cuéntanos sobre tu proyecto y nuestro equipo de expertos se pondrá en contacto contigo a la brevedad.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold mb-1">Email</h5>
+                                <p class="text-gray-400">hola@studionova.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold mb-1">Ubicación</h5>
+                                <p class="text-gray-400">Distrito Creativo, Ciudad de Diseño, CD 10101</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="bg-darker p-8 md:p-10 rounded-3xl border border-gray-800 shadow-xl animate-on-scroll" style="transition-delay: 200ms;">
+                    <form onsubmit="event.preventDefault(); alert('¡Gracias por contactarnos! Este es un demo.');" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2" for="nombre">Nombre</label>
+                                <input type="text" id="nombre" class="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Tu nombre" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2" for="email">Email</label>
+                                <input type="email" id="email" class="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors" placeholder="tu@email.com" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2" for="servicio">Servicio de Interés</label>
+                            <select id="servicio" class="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors appearance-none">
+                                <option>Branding</option>
+                                <option>Marketing Digital</option>
+                                <option>Diseño Web</option>
+                                <option>Gestión de Redes</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2" for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" rows="4" class="w-full bg-dark border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors resize-none" placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all transform hover:-translate-y-1">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-900 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+                <div class="text-2xl font-bold tracking-tighter">
+                    STUDIO<span class="text-gradient">NOVA</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-blue-500 transition-colors text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-blue-500 transition-colors text-xl"><i class="fab fa-behance"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-blue-500 transition-colors text-xl"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-blue-500 transition-colors text-xl"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 Studio Nova. Todos los derechos reservados.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacidad</a>
+                    <a href="#" class="hover:text-white transition-colors">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: stop observing once animated
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar blur effect on scroll
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.85)';
+                navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.7)';
+                navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
+            }
+        });
+    </script>
+</body>
+</html>
